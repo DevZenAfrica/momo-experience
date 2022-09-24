@@ -1,0 +1,17 @@
+<ion-header class="ion-no-border py-2 px-3 bg-gradient-to-b from-gray-400" [translucent]="true">
+  <ion-toolbar color="primary rounded">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Preferred partners</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section class="p-3">
+    <label class="pb-3 block text-sm font-medium text-gray-900 dark:text-gray-400">Your favorite partners</label>
+    <div *ngIf="currentUser">
+      <app-miniature-partner [idPartner]="id" *ngFor="let id of currentUser.favoritePartner"></app-miniature-partner>
+    </div>
+  </section>
+</ion-content>

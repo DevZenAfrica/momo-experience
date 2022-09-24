@@ -1,0 +1,23 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+
+import { FeesPageRoutingModule } from './fees-routing.module';
+
+import { FeesPage } from './fees.page';
+import {HomePageModule} from '../home/home.module';
+import {InternationalFeesComponent} from '../shared/international-fees/international-fees.component';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        FeesPageRoutingModule,
+        HomePageModule
+    ],
+    declarations: [FeesPage, InternationalFeesComponent]
+})
+export class FeesPageModule {}

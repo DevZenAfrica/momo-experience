@@ -1,0 +1,15 @@
+<ion-item *ngIf="skin === 'item' && data" lines="none">
+  <ion-avatar slot="start">
+    <img [src]="data.logo ? data.logo : ''" alt="..."/>
+  </ion-avatar>
+  <ion-label class="align-text-top">
+    <h2>{{data.title}}</h2>
+    <p>{{data.description}}</p>
+  </ion-label>
+</ion-item>
+
+<a routerLink="../../preview-service/{{data.id}}" *ngIf="skin === 'circle' && data" class="flex flex-col items-center elt-circle">
+  <img class="w-10 h-10 logo-circle rounded-full" [src]="data.logo ? data.logo : ''" alt="...">
+  <span class="mb-1 text-sm text-gray-900 dark:text-white">{{data.title}}</span>
+</a>
+

@@ -1,0 +1,32 @@
+<section>
+  <label class="block text-sm font-medium text-gray-900 dark:text-gray-400">Choose country recept</label>
+  <div class="grid grid-cols-7 ion-padding-vertical">
+    <div class="col-span-6">
+      <ion-slides pager="false" [options]="slideOptsGroup">
+        <ion-slide *ngFor="let country of countryRecept; let i = index">
+          <a (click)="chooseCountryRecept(country)" class="flex {{ country === countryReceptSelect ? 'bg-yellow-400 text-gray-800' : 'bg-transparent text-gray-800 border border-gray-800'}} px-2 ion-text-capitalize text-sm py-2 rounded">
+            <img *ngIf="country.flag" class="w-5 h-5 rounded-full avatar-img" [src]="country.flag" alt="Rounded avatar"> &nbsp;
+            <span>{{country.name}}</span>
+          </a>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <div class="col-span-1 ion-text-center px-3 text-gray-500 rotate-90 ">
+      <svg (click)="presentAllCategorie()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 inline-flex inline">
+        <path d="M6 12a.75.75 0 01-.75-.75v-7.5a.75.75 0 111.5 0v7.5A.75.75 0 016 12zM18 12a.75.75 0 01-.75-.75v-7.5a.75.75 0 011.5 0v7.5A.75.75 0 0118 12zM6.75 20.25v-1.5a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0zM18.75 18.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 011.5 0zM12.75 5.25v-1.5a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0zM12 21a.75.75 0 01-.75-.75v-7.5a.75.75 0 011.5 0v7.5A.75.75 0 0112 21zM3.75 15a2.25 2.25 0 104.5 0 2.25 2.25 0 00-4.5 0zM12 11.25a2.25 2.25 0 110-4.5 2.25 2.25 0 010 4.5zM15.75 15a2.25 2.25 0 104.5 0 2.25 2.25 0 00-4.5 0z" />
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="mb-3" *ngIf="countryReceptSelect && remittances.length === 0">
+  <label class="block mb-3 text-sm font-medium text-gray-900 dark:text-gray-400">No information at this time</label>
+</div>
+
+<section *ngIf="remittances.length > 0">
+  <div>
+    <label class="block mb-3 text-sm font-medium text-gray-900 dark:text-gray-400">Remittance partners</label>
+  </div>
+
+  <app-miniature-group-partner [idGroupPartner]="igp.idGroupPartner" *ngFor="let igp of remittances"></app-miniature-group-partner>
+</section>

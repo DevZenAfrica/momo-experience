@@ -1,0 +1,17 @@
+<app-header></app-header>
+
+<ion-content>
+  <div class="px-3 pb-1 pt-2">
+    <p class="text-3xl font-bold">MoMo Services</p>
+  </div>
+
+  <app-print-group-micro-services></app-print-group-micro-services>
+
+  <section class="px-3 py-3">
+    <div class="grid grid-cols-4 gap-4">
+      <ng-container *ngFor="let ms of microServices">
+        <app-miniature-micro-service [data]="ms" skin="circle" *ngIf="groupSelect === '' || ms.categorie === groupSelect"></app-miniature-micro-service>
+      </ng-container>
+    </div>
+  </section>
+</ion-content>

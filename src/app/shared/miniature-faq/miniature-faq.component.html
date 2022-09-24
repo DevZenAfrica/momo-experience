@@ -1,0 +1,20 @@
+<div class="bg-white border-b-2 border-gray-200 p-8 mb-2">
+  <div (click)="isToggle === 1 ? (isToggle = 0) : (isToggle = 1)" class="cursor-pointer flex items-center justify-between">
+    <div>
+      <h2 [ngClass]="'text-base font-light leading-none ' + (isToggle === 1 ? 'text-indigo-700' : 'text-gray-800')">{{faq.title}}</h2>
+    </div>
+    <button data-menu class="focus:outline-none  focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 ring-offset-white cursor-pointer">
+      <svg stroke-width="2" stroke="currentColor" role="button" aria-label="open dropdown" class="{{isToggle === 1 ? 'hidden' : ''}} w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+      </svg>
+      <svg fill="none" viewBox="0 0 24 24" role="button" aria-label="close dropdown" stroke-width="2" stroke="currentColor" class="{{isToggle === 1 ? '' : 'hidden'}} w-4 h-4" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+      </svg>
+    </button>
+  </div>
+  <ul *ngIf="isToggle === 1">
+    <li>
+      <p class="text-base leading-normal font-light text-gray-600 mt-4 lg:w-96">{{faq.content}}</p>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,26 @@
+<section *ngIf="data">
+  <div *ngIf="!data.content">
+    <div class="mb-3">
+      <label for="imput_montant" class="block mb-2 text-sm font-medium {{ montantRecupInput > 0 && (detectMin() > 0 && montantRecupInput < detectMin() || detectMax() > 0 && montantRecupInput > detectMax()) }}">Enter your amount</label>
+      <input (ngModelChange)="calculResult($event)" ngModel value="0" type="number" id="imput_montant" class="{{ montantRecupInput > 0 && (detectMin() > 0 && montantRecupInput < detectMin() || detectMax() > 0 && montantRecupInput > detectMax()) ? 'bg-red-50 border-red-500 text-red-500' : 'bg-gray-50 border-yellow-400 text-gray-900' }} shadow border-t-4 text-sm rounded-lg block w-full p-2.5" placeholder="1234" required>
+      <p *ngIf="montantRecupInput > 0 && (detectMin() > 0 && montantRecupInput < detectMin() || detectMax() > 0 && montantRecupInput > detectMax())" class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Min :</span> {{detectMin()}}. <span class="font-medium">Max :</span> {{detectMax()}}.</p>
+    </div>
+    <div *ngIf="reduce !== null" style="background-color: #202020" class="mt-3 border-t-4 border-yellow-400 p-6 max-w-sm text-white rounded-2xl dark:bg-gray-800 dark:border-gray-700">
+      <a href="#">
+        <h5 class="mb-2 text-3xl font-bold tracking-tight"><small class="text-sm">Total</small> <span class="text-yellow-400"> {{data.seuilMax > 0 ? ((reduce + (taxe ? taxe : 0)) <= data.seuilMax ? (reduce + (taxe ? taxe : 0)) : data.seuilMax) : (reduce + (taxe ? taxe : 0)) }} </span> <small class="text-sm uppercase">{{data.devise}}</small></h5>
+      </a>
+      <p class="mb-3 font-normal" *ngIf="taxe !== null">
+        <span>Tax : {{reduce}} <small class="text-sm">{{data.devise}}</small></span> <span>(+ {{taxe}} {{data.titleTax}})</span>
+      </p>
+    </div>
+  </div>
+  <div *ngIf="data.content">
+    <div class="mb-3">
+      <label for="imput_montant" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Information</label>
+    </div>
+    <div class="py-3" [innerHTML]="data.content"></div>
+  </div>
+  <div class="py-2 text-right" *ngIf="data.dateUpdate">
+    <span style="font-size: 12px" class="text-yellow-400">Fees last update : {{data.dateUpdate | date : 'd MMM yyyy'}}</span>
+  </div>
+</section>

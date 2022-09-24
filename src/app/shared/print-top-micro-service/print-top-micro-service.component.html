@@ -1,0 +1,10 @@
+<div class="px-3 pb-1 pt-2" *ngIf="microServices.length > 0">
+  <p class="text-xl font-bold">Some micro services</p>
+
+</div>
+
+<ion-slides  class="ion-padding-vertical px-3" pager="false" [options]="slideOpts">
+  <ion-slide *ngFor="let ms of microServices">
+    <app-miniature-micro-service [skin]="'circle'" [data]="ms"></app-miniature-micro-service>
+  </ion-slide>
+</ion-slides>
