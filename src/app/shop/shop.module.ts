@@ -13,14 +13,17 @@ import {MapPartnerComponent} from "../shared/map-partner/map-partner.component";
 import {GoogleMapsModule} from "@angular/google-maps";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ShopPageRoutingModule,
-    HomePageModule,
-    GoogleMapsModule
-  ],
-  declarations: [ShopPage, PrintCategoryPartnerComponent, MapPartnerComponent]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        ShopPageRoutingModule,
+        HomePageModule,
+        GoogleMapsModule
+    ],
+    exports: [
+        PrintCategoryPartnerComponent
+    ],
+    declarations: [ShopPage, MapPartnerComponent]
 })
 export class ShopPageModule {}

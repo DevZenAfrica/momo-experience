@@ -1,9 +1,11 @@
-<div class="px-3 pb-1 pt-2">
-  <p class="text-xl font-bold">Do more witch MoMo</p>
+<div class="pt-3">
+  <p class="px-5 text-sm font-bold tracking-tight text-blue-900 uppercase">
+    HOW DOES IT WORK?
+  </p>
 </div>
 
-<ion-slides  class="ion-padding-vertical" pager="false" [options]="slideOpts">
+<ion-slides class="my-2" pager="false" [options]="slideOpts">
   <ion-slide *ngFor="let howTo of allHowTo">
-    <app-miniature-how-to [data]="howTo"></app-miniature-how-to>
+    <app-miniature-article skin="card-t" [data]="howTo"></app-miniature-article>
   </ion-slide>
 </ion-slides>

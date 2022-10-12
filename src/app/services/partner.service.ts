@@ -130,4 +130,23 @@ export class PartnerService {
       );
     });
   }
+
+  async getPartnerWitchTypePartner(typePartner) {
+    return new Promise<Partner[]>((resolve, reject) => {
+      // @ts-ignore
+      firebase.firestore().collection('partner').where('typePartner', '==', typePartner).onSnapshot(
+        (docRef) => {
+          const result: Partner[] = [];
+          docRef.forEach(function(doc) {
+            if(doc.data().status !== 0) {
+              result.push(doc.data() as Partner);
+            }
+          });
+          resolve(result as any);
+        }, (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
 }

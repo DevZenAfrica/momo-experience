@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {MicroserviceService} from "../services/microservice.service";
-import {MicroService} from "../models/microService";
 import {ActivatedRoute} from "@angular/router";
+import {PartnerService} from "../services/partner.service";
+import {Partner} from "../models/partner";
 
 @Component({
   selector: 'app-microservice',
@@ -10,18 +10,18 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class MicroservicePage implements OnInit {
 
-  microServices: MicroService[] = [];
+  partners: Partner[] = [];
   groupSelect = '';
 
-  constructor(private microServiceService: MicroserviceService, private msservice: MicroserviceService, private route: ActivatedRoute) { }
+  constructor(private partnerService: PartnerService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     if(this.route.snapshot.queryParams.group) {
       this.groupSelect = this.route.snapshot.queryParams.group;
     }
-    this.microServiceService.getMicroServices().then(
+    this.partnerService.getPartnerWitchTypePartner('service').then(
       (data) => {
-        this.microServices = data;
+        this.partners = data;
       }
     );
   }

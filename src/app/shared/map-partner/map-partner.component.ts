@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, NgZone, OnInit, ViewChild} from '@angular/core';
 import {GoogleMap, MapGeocoder, MapGeocoderResponse, MapInfoWindow, MapMarker} from '@angular/google-maps';
 import {PartnerService} from '../../services/partner.service';
 import {ActivatedRoute} from '@angular/router';

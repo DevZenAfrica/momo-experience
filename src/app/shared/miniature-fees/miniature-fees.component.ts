@@ -20,10 +20,16 @@ export class MiniatureFeesComponent implements OnInit {
   constructor(private feesService: FeesService) { }
 
   ngOnInit() {
+    this.resultat = null;
+    this.reduce = null;
+    this.taxe = null;
+    this.montantRecupInput = null;
     if(!this.data && this.idFees) {
       this.feesService.getFeesWitchId(this.idFees).then(
         (donnee) => {
           this.data = donnee;
+          this.resultat = null;
+          this.montantRecupInput = 0;
         }
       );
     }

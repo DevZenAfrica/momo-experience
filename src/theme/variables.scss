@@ -3,28 +3,70 @@
 
 @font-face {
   font-family: AppFont;
-  src: url("../assets/font/MTN Brighter Sans Regular/MTNBrighterSans-Light.otf");
+  src: url("../assets/font/MTNBrighterSans/MTNBrighterSans-ExtraLight.otf");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: AppFont;
+  src: url("../assets/font/MTNBrighterSans/MTNBrighterSans-Light.otf");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: AppFont;
+  src: url("../assets/font/MTNBrighterSans/MTNBrighterSans-Regular.otf");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: AppFont;
+  src: url("../assets/font/MTNBrighterSans/MTNBrighterSans-Medium.otf");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: AppFont;
+  src: url("../assets/font/MTNBrighterSans/MTNBrighterSans-Bold.otf");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: AppFont;
+  src: url("../assets/font/MTNBrighterSans/MTNBrighterSans-ExtraBold.otf");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
 }
 
 /** Ionic CSS Variables **/
 :root {
 
   --ion-font-family: "AppFont", sans-serif !important;
-  font-family: "AppFont", sans-serif !important;
 
-  --ion-color-primary: #ffcb05;
-  --ion-color-primary-rgb: 255,203,5;
-  --ion-color-primary-contrast: #000000;
-  --ion-color-primary-contrast-rgb: 0,0,0;
-  --ion-color-primary-shade: #e0b304;
-  --ion-color-primary-tint: #ffd01e;
+  --ion-color-primary: #004f6f;
+  --ion-color-primary-rgb: 0,79,111;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #004662;
+  --ion-color-primary-tint: #1a617d;
 
-  --ion-color-secondary: #202020;
-  --ion-color-secondary-rgb: 32,32,32;
-  --ion-color-secondary-contrast: #ffcb05;
-  --ion-color-secondary-contrast-rgb: 255,255,255;
-  --ion-color-secondary-shade: #1c1c1c;
-  --ion-color-secondary-tint: #363636;
+  --ion-color-secondary: #ffcb05;
+  --ion-color-secondary-rgb: 255,203,5;
+  --ion-color-secondary-contrast: #000000;
+  --ion-color-secondary-contrast-rgb: 0,0,0;
+  --ion-color-secondary-shade: #e0b304;
+  --ion-color-secondary-tint: #ffd01e;
 
   --ion-color-tertiary: #5260ff;
   --ion-color-tertiary-rgb: 82,96,255;

@@ -10,13 +10,13 @@ import { MicroservicePage } from './microservice.page';
 import {HomePageModule} from '../home/home.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    MicroservicePageRoutingModule,
-    HomePageModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        MicroservicePageRoutingModule,
+        HomePageModule
+    ],
   declarations: [MicroservicePage]
 })
 export class MicroservicePageModule {}

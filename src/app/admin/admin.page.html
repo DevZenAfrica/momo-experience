@@ -1,0 +1,1033 @@
+<div class="flex items-center p-3">
+  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+    <ion-back-button defaultHref="tabs"></ion-back-button>
+  </div>
+  <div class="flex-shrink-0">
+    <img src="assets/img/icone-1.png" class="rounded-none w-12"/>
+  </div>
+  <div class="flex-1 min-w-0">
+    <h3 class="text-xl px-1 font-bold text-blue-900">
+      Dashboard
+    </h3>
+  </div>
+</div>
+
+<ion-content *ngIf="autorised">
+  <section class="p-5">
+    <form #form="ngForm">
+      <label for="operation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Groupe opération</label>
+      <select id="operation" ngModel name="operation" (ngModelChange)="changeOperation($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option selected value="">Sélectionné le groupe</option>
+        <option value="ajouter-pays">Pays</option>
+        <option value="ajouter-groupe-operateur">Groupe operateurs</option>
+        <option value="ajouter-operateur">Operateurs</option>
+        <option value="ajouter-group-fees">Groupe fees</option>
+
+        <option value="ajouter-fees">Fees</option>
+        <option value="ajouter-article">Article</option>
+        <option value="ajouter-partner">Partner</option>
+
+        <option value="ajouter-sondage">Sondage</option>
+        <option value="ajouter-category-partner">Category partner</option>
+        <option value="ajouter-groupe-partner">Groupe partner</option>
+        <option value="ajouter-caisse">Caisse</option>
+        <option value="ajouter-remittance">Remittance</option>
+        <option value="ajouter-faq">Faq</option>
+      </select>
+    </form>
+  </section>
+
+  <section class="p-5 md:flex space-x-2 space-y-2" *ngIf="tache">
+    <div class="md:w-2/3">
+      <div *ngIf="tache === 'ajouter-fees'">
+        <form #form1="ngForm" (ngSubmit)="addFees(form1)">
+          <div class="border border-green-500 p-3 rounded my-3 grid gap-6 mb-6 md:grid-cols-6">
+            <div class="col-span-5">
+              <label for="a" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Opération à effectué</label>
+              <select id="a" type="text" ngModel name="operationSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option (click)="currentFees = null" selected value="">Nouveau</option>
+                <option (click)="currentFees = ac" value="{{ac}}" *ngFor="let ac of fees">Modifier {{ac.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="currentFees">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">&nbsp;</label>
+              <a (click)="deleteObjet()" class="inline-block disabled:opacity-50 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto py-1.5 px-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2 border border-orange-500 p-3 rounded my-3">
+            <div>
+              <label for="id16" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identifiant <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentFees ? currentFees.id : ''}}" name="id" type="text" id="id16" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="AbC..." required>
+            </div>
+            <div>
+              <label for="idOperator5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Operateur <span class="text-red-700">*</span></label>
+              <select id="idOperator5" required type="text" ngModel="{{currentFees ? currentFees.idOperator : ''}}" name="idOperator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="{{go.id}}" *ngFor="let go of operator">{{go.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="name55" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Name <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentFees ? currentFees.name : ''}}" name="name" type="text" id="name55" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+            </div>
+            <div>
+              <label for="status53" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Le rendre public ? <span class="text-red-700">*</span></label>
+              <select id="status53" required type="text" ngModel="{{currentFees ? currentFees.status : ''}}" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="1">Oui</option>
+                <option value="0">Non</option>
+              </select>
+            </div>
+            <div>
+              <label for="min" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Min (séparé par ; pour plusieur)</label>
+              <input ngModel="{{currentFees ? currentFees.min : ''}}" name="min" type="text" id="min" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="123...">
+            </div>
+            <div>
+              <label for="max" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Max (séparé par ; pour plusieur)</label>
+              <input ngModel="{{currentFees ? currentFees.max : ''}}" name="max" type="text" id="max" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="123...">
+            </div>
+            <div>
+              <label for="seuilmin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Seuil Min (séparé par ; pour plusieur)</label>
+              <input ngModel="{{currentFees ? currentFees.seuilMin : ''}}" name="seuilmin" type="number" id="seuilmin" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="123...">
+            </div>
+            <div>
+              <label for="seuilmax" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Seuil Max (séparé par ; pour plusieur)</label>
+              <input ngModel="{{currentFees ? currentFees.seuilMax : ''}}" name="seuilmax" type="number" id="seuilmax" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="123...">
+            </div>
+            <div>
+              <label for="typeCalcul" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Type calcul (séparé par ; pour plusieur)</label>
+              <input ngModel="{{currentFees ? currentFees.typeCalcul : ''}}" name="typeCalcul" type="text" id="typeCalcul" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="% ou -">
+            </div>
+            <div>
+              <label for="montant" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Montant (séparé par ; pour plusieur)</label>
+              <input ngModel="{{currentFees ? currentFees.montant : ''}}" name="montant" type="text" id="montant" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="123...">
+            </div>
+            <div>
+              <label for="countrySend" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Pays envoyeur</label>
+              <select id="countrySend" type="text" ngModel="{{currentFees ? currentFees.idCountrySend : ''}}" name="countrySend" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="{{go.id}}" *ngFor="let go of pays">{{go.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="countryReceive" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Pays receveurs</label>
+              <select id="countryReceive" multiple type="text" ngModel name="countryReceive" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option [selected]="currentFees && currentFees.idCountrySend.toString().includes(go.id)" value="{{go.id}}" *ngFor="let go of pays">{{go.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="titreTax" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Titre tax</label>
+              <input ngModel="{{currentFees ? currentFees.titleTax : ''}}" name="titreTax" type="text" id="titreTax" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc...">
+            </div>
+            <div>
+              <label for="montantTax" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Montant Tax</label>
+              <input ngModel="{{currentFees ? currentFees.montantTax : ''}}" name="montantTax" type="number" id="montantTax" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1000000...">
+            </div>
+            <div>
+              <label for="typeCalculTax" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Type calcul tax</label>
+              <input ngModel="{{currentFees ? currentFees.typeCalculTax : ''}}" name="typeCalculTax" type="text" id="typeCalculTax" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="% ou -">
+            </div>
+            <div>
+              <label for="idGroupFees" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Groupe fees <span class="text-red-700">*</span></label>
+              <select id="idGroupFees" required type="text" ngModel="{{currentFees ? currentFees.idGroupFees : ''}}" name="idGroupFees" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="{{go.id}}" *ngFor="let go of groupeFees">{{go.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="content74" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contenu (si du contenu doit être affiché en lieu de tout)</label>
+              <input ngModel="{{currentFees ? currentFees.content : ''}}" name="content" type="text" id="content74" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="<div> ou https://">
+            </div>
+            <div>
+              <label for="devise" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Devise <span class="text-red-700">*</span></label>
+              <input required ngModel="{{currentFees ? currentFees.devise : ''}}" name="devise" type="text" id="devise" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="XAF ou...">
+            </div>
+            <div>
+              <label for="dateUpdate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Derniere mis a jour</label>
+              <input ngModel="{{currentFees ? currentFees.dateUpdate : ''}}" name="dateUpdate" type="date" id="dateUpdate" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="30/09/2022...">
+            </div>
+            <div></div>
+            <button [disabled]="form1.invalid" type="submit" class="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg *ngIf="isLoading" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+              </svg>
+              Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="tache === 'ajouter-article'">
+        <form #form1="ngForm" (ngSubmit)="addArticle(form1)">
+          <div class="border border-green-500 p-3 rounded my-3 grid gap-6 mb-6 md:grid-cols-6">
+            <div class="col-span-5">
+              <label for="b" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Opération à effectué</label>
+              <select id="b" type="text" ngModel name="operationSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option (click)="currentArticle = null" selected value="">Nouveau</option>
+                <option (click)="currentArticle = ac" value="{{ac}}" *ngFor="let ac of article">Modifier {{ac.title}}</option>
+              </select>
+            </div>
+            <div *ngIf="currentArticle">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">&nbsp;</label>
+              <a (click)="deleteObjet()" class="inline-block disabled:opacity-50 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto py-1.5 px-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2 border border-orange-500 p-3 rounded my-3">
+            <div>
+              <label for="id15" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identifiant <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentArticle ? currentArticle.id : ''}}" name="id" type="text" id="id15" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="AbC..." required>
+            </div>
+            <div>
+              <label for="titre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Titre <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentArticle ? currentArticle.title : ''}}" name="titre" type="text" id="titre" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+            </div>
+            <div>
+              <label for="content1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Content</label>
+              <input ngModel="{{currentArticle ? currentArticle.content : ''}}" name="content" type="text" id="content1" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https ou <div>...">
+            </div>
+            <div>
+              <label for="status3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Le rendre public ? <span class="text-red-700">*</span></label>
+              <select id="status3" required type="text" ngModel="{{currentArticle ? currentArticle.status : ''}}" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="1">Oui</option>
+                <option value="0">Non</option>
+              </select>
+            </div>
+            <div>
+              <label for="idOperator4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Operateur <span class="text-red-700">*</span></label>
+              <select id="idOperator4" required type="text" ngModel="{{currentArticle ? currentArticle.idOperator : ''}}" name="idOperator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="{{go.id}}" *ngFor="let go of operator">{{go.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="description2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
+              <input ngModel="{{currentArticle ? currentArticle.description : ''}}" name="description" type="text" id="description2" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+            </div>
+            <div>
+              <label for="logo7" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Logo <span class="text-red-700">*</span></label>
+              <input required ngModel="{{currentArticle ? currentArticle.logo : ''}}" name="logo" type="text" id="logo7" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https...">
+            </div>
+            <div>
+              <label for="miniatureArticle" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Miniature article <span class="text-red-700">*</span></label>
+              <input required ngModel="{{currentArticle ? currentArticle.miniature : ''}}" name="miniatureArticle" type="text" id="miniatureArticle" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https...">
+            </div>
+            <div>
+              <label for="categorieA" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Catégorie article <span class="text-red-700">*</span></label>
+              <select id="categorieA" type="text" ngModel="{{currentArticle ? currentArticle.categorie : ''}}" name="categorie" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <option value="news">News</option>
+                <option value="how-to">How To</option>
+                <option value="suggested-service">Service sugérer</option>
+              </select>
+            </div>
+            <div>
+              <label for="tags" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tags (séparé par les ; pour plusieurs)</label>
+              <textarea ngModel="{{currentArticle ? currentArticle.tags.toString().replace(',', ';') : ''}}" name="tags" id="tags" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https ou <div>..."></textarea>
+            </div>
+            <div>
+              <label for="link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Lien vers l'article</label>
+              <input ngModel="{{currentArticle ? currentArticle.link : ''}}" name="link" type="text" id="link" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https...">
+            </div>
+            <div></div>
+            <button [disabled]="form1.invalid" type="submit" class="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg *ngIf="isLoading" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+              </svg>
+              Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="tache === 'ajouter-partner'">
+        <form #form1="ngForm" (ngSubmit)="addPartner(form1)">
+          <div class="border border-green-500 p-3 rounded my-3 grid gap-6 mb-6 md:grid-cols-6">
+            <div class="col-span-5">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Opération à effectué</label>
+              <select id="operationSelect" type="text" ngModel name="operationSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option (click)="currentPartner = null" selected value="">Nouveau</option>
+                <option (click)="currentPartner = ac" value="{{ac}}" *ngFor="let ac of partner">Modifier {{ac.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="currentPartner">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">&nbsp;</label>
+              <a (click)="deleteObjet()" class="inline-block disabled:opacity-50 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto py-1.5 px-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2 border border-orange-500 p-3 rounded my-3">
+            <div>
+              <label for="id14" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identifiant <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentPartner ? currentPartner.id : ''}}" name="id" type="text" id="id14" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="AbC..." required>
+            </div>
+            <div>
+              <label for="name33" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nom partenaire <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentPartner ? currentPartner.name : ''}}" name="name" type="text" id="name33" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+            </div>
+            <div>
+              <label for="subtitle" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sous titre <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentPartner ? currentPartner.subtitle : ''}}" name="subtitle" type="text" id="subtitle" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+            </div>
+            <div>
+              <label for="logo6" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Logo <span class="text-red-700">*</span></label>
+              <input required ngModel="{{currentPartner ? currentPartner.logo : ''}}" name="logo" type="text" id="logo6" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https...">
+            </div>
+            <div>
+              <label for="idCountry6" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Pays <span class="text-red-700">*</span></label>
+              <select id="idCountry6" type="text" ngModel="{{currentPartner ? currentPartner.idCountry : ''}}" name="idCountry" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <option value="{{country.id}}" *ngFor="let country of pays">{{country.name}}</option>
+              </select>
+            </div>
+            <!--div>
+              <label for="howTo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Comment ca marche </label>
+              <select *ngIf="currentPartner" id="howTo" type="text" multiple ngModel name="howTo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option [selected]="currentPartner && currentPartner.howTo.toString().includes(art.id)" value="{{art.id}}" *ngFor="let art of article">{{art.title}}</option>
+              </select>
+            </div-->
+            <div>
+              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Comment ca marche </label>
+              <div *ngFor="let art of article; let i = index">
+                <label [attr.for]="art.id">{{ art.title }}</label>
+                <input value="{{art.id}}" name="guy" type="checkbox" [attr.id]="art.id" [(ngModel)]="art.id" />
+              </div>
+            </div>
+            <div>
+              <label for="idFaq" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Answer to the questions </label>
+              <select id="idFaq" type="text" multiple ngModel name="idFaq" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option [selected]="currentPartner && currentPartner.idFaq.toString().includes(art.id)" value="{{art.id}}" *ngFor="let art of faq">{{art.title}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="fees" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Frais</label>
+              <select id="fees" type="text" multiple ngModel name="fees" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option [selected]="currentPartner && currentPartner.idFees.toString().includes(fs.id)" value="{{fs.id}}" *ngFor="let fs of fees">{{fs.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="idGP1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Groupe partenaire <span class="text-red-700">*</span></label>
+              <select id="idGP1" type="text" ngModel="{{currentPartner ? currentPartner.idGroupPartner : ''}}" name="idGroupPartner" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <option selected value="">Sélectionné reponse</option>
+                <option value="{{go.id}}" *ngFor="let go of groupePartner">{{go.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="long" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Longitude</label>
+              <input ngModel="{{currentPartner ? currentPartner.long : ''}}" name="long" type="number" id="long" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1.5...">
+            </div>
+            <div>
+              <label for="lat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Latitude</label>
+              <input ngModel="{{currentPartner ? currentPartner.lat : ''}}" name="lat" type="number" id="lat" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1.5...">
+            </div>
+            <div>
+              <label for="idCatPartner" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Categorie partner <span class="text-red-700">*</span></label>
+              <select id="idCatPartner" type="text" ngModel="{{currentPartner ? currentPartner.idCategoryPartner : ''}}" name="idCategoryPartner" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <option value="{{cp.id}}" *ngFor="let cp of categoriePartner">{{cp.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="lpl" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Logo Pins Localisation</label>
+              <input ngModel="{{currentPartner ? currentPartner.logoPins : ''}}" name="logoPins" type="text" id="lpl" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Http...">
+            </div>
+            <div>
+              <label for="pc" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Photo couverture</label>
+              <input ngModel="{{currentPartner ? currentPartner.cover : ''}}" name="cover" type="text" id="pc" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Http...">
+            </div>
+            <div class="pl-3 space-y-2">
+              <div>
+                <label for="contacts" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contacts (séparé par ; pour plusieurs)</label>
+                <textarea rows="4" ngModel="{{currentPartner && currentPartner.content ? currentPartner.content.contacts.toString().replace(',',';') : ''}}" name="contacts" type="text" id="contacts" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..."></textarea>
+              </div>
+              <div>
+                <label for="adresse" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Adresses</label>
+                <textarea rows="4" ngModel="{{currentPartner && currentPartner.content ? currentPartner.content.address : ''}}" name="adresse" type="text" id="adresse" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..."></textarea>
+              </div>
+              <div>
+                <label for="horaire" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Horaires ouverture</label>
+                <textarea rows="4" ngModel="{{currentPartner && currentPartner.content ? currentPartner.content.openingDaysAndHours : ''}}" name="horaire" type="text" id="horaire" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..."></textarea>
+              </div>
+              <div>
+                <label for="services" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Services MoMo disponibles</label>
+                <textarea rows="4" ngModel="{{currentPartner && currentPartner.content ? currentPartner.content.serviceAvailable : ''}}" name="services" type="text" id="services" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..."></textarea>
+              </div>
+              <div>
+                <label for="otherInfos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Plus d'infos</label>
+                <textarea rows="4" ngModel="{{currentPartner && currentPartner.content ? currentPartner.content.otherInformation : ''}}" name="otherInfos" type="text" id="otherInfos" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..."></textarea>
+              </div>
+            </div>
+            <div></div>
+            <button [disabled]="form1.invalid" type="submit" class="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg *ngIf="isLoading" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+              </svg>
+              Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="tache === 'ajouter-remittance'">
+        <form #form1="ngForm" (ngSubmit)="addRemittance(form1)">
+          <div class="border border-green-500 p-3 rounded my-3 grid gap-6 mb-6 md:grid-cols-6">
+            <div class="col-span-5">
+              <label for="c" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Opération à effectué</label>
+              <select id="c" type="text" ngModel name="operationSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option (click)="currentRemittance = null" selected value="">Nouveau</option>
+                <option (click)="currentRemittance = ac" value="{{ac}}" *ngFor="let ac of remittance">Modifier {{ac.id}}</option>
+              </select>
+            </div>
+            <div *ngIf="currentRemittance">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">&nbsp;</label>
+              <a (click)="deleteObjet()" class="inline-block disabled:opacity-50 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto py-1.5 px-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2 border border-orange-500 p-3 rounded my-3">
+            <div>
+              <label for="id7" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identifiant <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentRemittance ? currentRemittance.id : ''}}" name="id" type="text" id="id7" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="AbC..." required>
+            </div>
+            <div>
+              <label for="idCountry" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Pays d'envoie(s) <span class="text-red-700">*</span></label>
+              <select id="idCountry" multiple type="text" ngModel name="idCountry" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <option [selected]="currentRemittance && currentRemittance.idCountry.toString().includes(country.id)" value="{{country.id}}" *ngFor="let country of pays">{{country.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="status2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Le rendre public ? <span class="text-red-700">*</span></label>
+              <select id="status2" required type="text" ngModel="{{currentRemittance ? currentRemittance.status : ''}}" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="1">Oui</option>
+                <option value="0">Non</option>
+              </select>
+            </div>
+            <div>
+              <label for="idFees1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Fees</label>
+              <select id="idFees1" type="text" ngModel="{{currentRemittance ? currentRemittance.idFees : ''}}" name="idFees" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="{{go.id}}" *ngFor="let go of fees">{{go.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="idGP" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Groupe partenaire <span class="text-red-700">*</span></label>
+              <select id="idGP" type="text" ngModel="{{currentRemittance ? currentRemittance.idGroupPartner : ''}}" name="idGroupPartner" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <option selected value="">Sélectionné reponse</option>
+                <option value="{{go.id}}" *ngFor="let go of groupePartner">{{go.name}}</option>
+              </select>
+            </div>
+            <div></div>
+            <button [disabled]="form1.invalid" type="submit" class="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg *ngIf="isLoading" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+              </svg>
+              Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="tache === 'ajouter-faq'">
+        <form #form1="ngForm" (ngSubmit)="addFaq(form1)">
+          <div class="border border-green-500 p-3 rounded my-3 grid gap-6 mb-6 md:grid-cols-6">
+            <div class="col-span-5">
+              <label for="c" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Opération à effectué</label>
+              <select id="c" type="text" ngModel name="operationSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option (click)="currentFaq = null" selected value="">Nouveau</option>
+                <option (click)="currentFaq = ac" value="{{ac}}" *ngFor="let ac of faq">Modifier {{ac.id}}</option>
+              </select>
+            </div>
+            <div *ngIf="currentFaq">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">&nbsp;</label>
+              <a (click)="deleteObjet()" class="inline-block disabled:opacity-50 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto py-1.5 px-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2 border border-orange-500 p-3 rounded my-3">
+            <div>
+              <label for="id45" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identifiant <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentFaq ? currentFaq.id : ''}}" name="id" type="text" id="id45" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="AbC..." required>
+            </div>
+            <div>
+              <label for="title6" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Titre <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentFaq ? currentFaq.title : ''}}" name="title" type="text" id="title6" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="AbC..." required>
+            </div>
+            <div>
+              <label for="content6" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contenu <span class="text-red-700">*</span></label>
+              <textarea ngModel="{{currentFaq ? currentFaq.content : ''}}" name="content" type="text" id="content6" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="AbC..." required></textarea>
+            </div>
+            <div>
+              <label for="status54" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Le rendre public ? <span class="text-red-700">*</span></label>
+              <select id="status54" required type="text" ngModel="{{currentFaq ? currentFaq.status : ''}}" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="1">Oui</option>
+                <option value="0">Non</option>
+              </select>
+            </div>
+            <div></div>
+            <button [disabled]="form1.invalid" type="submit" class="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg *ngIf="isLoading" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+              </svg>
+              Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="tache === 'ajouter-caisse'">
+        <form #form1="ngForm" (ngSubmit)="addCashier(form1)">
+          <div class="border border-green-500 p-3 rounded my-3 grid gap-6 mb-6 md:grid-cols-6">
+            <div class="col-span-5">
+              <label for="d" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Opération à effectué</label>
+              <select id="d" type="text" ngModel name="operationSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option (click)="currentCaisses = null" selected value="">Nouveau</option>
+                <option (click)="currentCaisses = ac" value="{{ac}}" *ngFor="let ac of caisses">Modifier {{ac.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="currentCaisses">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">&nbsp;</label>
+              <a (click)="deleteObjet()" class="inline-block disabled:opacity-50 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto py-1.5 px-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2 border border-orange-500 p-3 rounded my-3">
+            <div>
+              <label for="id4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identifiant <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentCaisses ? currentCaisses.id : ''}}" name="id" type="text" id="id4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="AbC..." required>
+            </div>
+            <div>
+              <label for="name3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nom caisse <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentCaisses ? currentCaisses.name : ''}}" name="name" type="text" id="name3" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+            </div>
+            <div>
+              <label for="code2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Code USSD caisse <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentCaisses ? currentCaisses.code : ''}}" name="code" type="text" id="code2" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="*123*...#" required>
+            </div>
+            <div>
+              <label for="notes" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Notes</label>
+              <textarea ngModel="{{currentCaisses ? currentCaisses.notes : ''}}" name="notes" id="notes" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https ou <div>..."></textarea>
+            </div>
+            <div class="pl-3 space-y-2">
+              <div>
+                <label for="media1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Media</label>
+                <input ngModel="{{currentCaisses ? currentCaisses.media : ''}}" name="media" type="text" id="media1" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https...">
+              </div>
+            </div>
+            <div>
+              <label for="idPartner" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Partenaire</label>
+              <select id="idPartner" type="text" ngModel="{{currentCaisses ? currentCaisses.idPartner : ''}}" name="idPartner" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="{{go.id}}" *ngFor="let go of partner">{{go.name}}</option>
+              </select>
+            </div>
+            <button [disabled]="form1.invalid" type="submit" class="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg *ngIf="isLoading" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+              </svg>
+              Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="tache === 'ajouter-groupe-partner'">
+        <form #form1="ngForm" (ngSubmit)="addGroupePartner(form1)">
+          <div class="border border-green-500 p-3 rounded my-3 grid gap-6 mb-6 md:grid-cols-6">
+            <div class="col-span-5">
+              <label for="e" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Opération à effectué</label>
+              <select id="e" type="text" ngModel name="operationSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option (click)="currentGroupePartner = null" selected value="">Nouveau</option>
+                <option (click)="currentGroupePartner = ac" value="{{ac}}" *ngFor="let ac of groupePartner">Modifier {{ac.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="currentGroupePartner">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">&nbsp;</label>
+              <a (click)="deleteObjet()" class="inline-block disabled:opacity-50 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto py-1.5 px-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2 border border-orange-500 p-3 rounded my-3">
+            <div>
+              <label for="id5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identifiant <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentGroupePartner ? currentGroupePartner.id : ''}}" name="id" type="text" id="id5" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="AbC..." required>
+            </div>
+            <div>
+              <label for="name5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nom groupe <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentGroupePartner ? currentGroupePartner.name : ''}}" name="name" type="text" id="name5" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+            </div>
+            <div>
+              <label for="logo5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Logo <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentGroupePartner ? currentGroupePartner.logo : ''}}" name="logo" type="text" id="logo5" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https..." required>
+            </div>
+            <div class="pl-3 space-y-2">
+              <div>
+                <label for="channel1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Lien app store ou play store | autre</label>
+                <input ngModel="{{currentGroupePartner && currentGroupePartner.channels.length > 0 ? currentGroupePartner.channels[0] : ''}}" name="channel1" type="text" id="channel1" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc...">
+              </div>
+              <div>
+                <label for="channel2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Lien play store ou app store ou autre</label>
+                <input ngModel="{{currentGroupePartner && currentGroupePartner.channels.length > 1 ? currentGroupePartner.channels[1] : ''}}" name="channel2" type="text" id="channel2" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc...">
+              </div>
+              <div>
+                <label for="channel3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Lien autre ou play store ou app store</label>
+                <input ngModel="{{currentGroupePartner && currentGroupePartner.channels.length > 2 ? currentGroupePartner.channels[2] : ''}}" name="channel3" type="text" id="channel3" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc...">
+              </div>
+            </div>
+            <div>
+              <label for="idFees" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Fees</label>
+              <select id="idFees" type="text" ngModel="{{currentGroupePartner ? currentGroupePartner.idFees : ''}}" name="idFees" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="{{go.id}}" *ngFor="let go of fees">{{go.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="idOperator3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Operateur <span class="text-red-700">*</span></label>
+              <select id="idOperator3" required type="text" ngModel="{{currentGroupePartner ? currentGroupePartner.idOperator : ''}}" name="idOperator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="{{go.id}}" *ngFor="let go of operator">{{go.name}}</option>
+              </select>
+            </div>
+            <button [disabled]="form1.invalid" type="submit" class="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg *ngIf="isLoading" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+              </svg>
+              Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="tache === 'ajouter-category-partner'">
+        <form #form1="ngForm" (ngSubmit)="addCategoryPartner(form1)">
+          <div class="border border-green-500 p-3 rounded my-3 grid gap-6 mb-6 md:grid-cols-6">
+            <div class="col-span-5">
+              <label for="f" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Opération à effectué</label>
+              <select id="f" type="text" ngModel name="operationSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option (click)="currentCategoryPartner = null" selected value="">Nouveau</option>
+                <option (click)="currentCategoryPartner = ac" value="{{ac}}" *ngFor="let ac of categoriePartner">Modifier {{ac.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="currentCategoryPartner">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">&nbsp;</label>
+              <a (click)="deleteObjet()" class="inline-block disabled:opacity-50 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto py-1.5 px-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2 border border-orange-500 p-3 rounded my-3">
+            <div>
+              <label for="id6" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identifiant <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentCategoryPartner ? currentCategoryPartner.id : ''}}" name="id" type="text" id="id6" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="AbC..." required>
+            </div>
+            <div>
+              <label for="name6" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nom categorie <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentCategoryPartner ? currentCategoryPartner.name : ''}}" name="name" type="text" id="name6" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+            </div>
+            <div>
+              <label for="13" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Illustration <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentCategoryPartner ? currentCategoryPartner.illustration : ''}}" name="illustration" type="text" id="13" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https..." required>
+            </div>
+            <div>
+              <label for="typeCategorie" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Type categorie <span class="text-red-700">*</span></label>
+              <select id="typeCategorie" required type="text" ngModel="{{currentCategoryPartner ? currentCategoryPartner.type : ''}}" name="typeCategorie" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="service">Service</option>
+                <option value="merchant">Marchand</option>
+              </select>
+            </div>
+            <button [disabled]="form1.invalid" type="submit" class="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg *ngIf="isLoading" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+              </svg>
+              Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="tache === 'ajouter-sondage'">
+        <form #form1="ngForm" (ngSubmit)="addPoll(form1)">
+          <div class="border border-green-500 p-3 rounded my-3 grid gap-6 mb-6 md:grid-cols-6">
+            <div class="col-span-5">
+              <label for="g" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Opération à effectué</label>
+              <select id="g" type="text" ngModel name="operationSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option (click)="currentSondages = null" selected value="">Nouveau</option>
+                <option (click)="currentSondages = ac" value="{{ac}}" *ngFor="let ac of sondages">Modifier {{ac.title}}</option>
+              </select>
+            </div>
+            <div *ngIf="currentSondages">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">&nbsp;</label>
+              <a (click)="deleteObjet()" class="inline-block disabled:opacity-50 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto py-1.5 px-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2 border border-orange-500 p-3 rounded my-3">
+            <div>
+              <label for="idS" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identifiant <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentSondages ? currentSondages.id : ''}}" name="id" type="text" id="idS" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="AbC..." required>
+            </div>
+            <div>
+              <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Question <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentSondages ? currentSondages.title : ''}}" name="title" type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="AbC..." required>
+            </div>
+            <div class="pl-3 space-y-2">
+              <div>
+                <label for="rep1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Reponse 1</label>
+                <input ngModel="{{currentSondages && currentSondages.customResponses.length > 0 ? currentSondages.customResponses[0] : ''}}" name="rep1" type="text" id="rep1" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+              </div>
+              <div>
+                <label for="rep2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Reponse 2</label>
+                <input ngModel="{{currentSondages && currentSondages.customResponses.length > 1 ? currentSondages.customResponses[1] : ''}}" name="rep2" type="text" id="rep2" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+              </div>
+              <div>
+                <label for="rep3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Reponse 3</label>
+                <input ngModel="{{currentSondages && currentSondages.customResponses.length > 2 ? currentSondages.customResponses[2] : ''}}" name="rep3" type="text" id="rep3" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+              </div>
+              <div>
+                <label for="rep4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Reponse 4</label>
+                <input ngModel="{{currentSondages && currentSondages.customResponses.length > 3 ? currentSondages.customResponses[3] : ''}}" name="rep4" type="text" id="rep4" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+              </div>
+              <div>
+                <label for="rep5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Reponse 5</label>
+                <input ngModel="{{currentSondages && currentSondages.customResponses.length > 4 ? currentSondages.customResponses[4] : ''}}" name="rep5" type="text" id="rep5" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+              </div>
+            </div>
+            <div>
+              <label for="top" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Affiché à l'accueil ? <span class="text-red-700">*</span></label>
+              <select id="top" required type="text" ngModel="{{currentSondages ? currentSondages.top : ''}}" name="top" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="1">Oui</option>
+                <option value="2">Non</option>
+              </select>
+            </div>
+            <div>
+              <label for="top" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Le rendre public ? <span class="text-red-700">*</span></label>
+              <select id="status1" required type="text" ngModel="{{currentSondages ? currentSondages.status : ''}}" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="1">Oui</option>
+                <option value="0">Non</option>
+              </select>
+            </div>
+            <div>
+              <label for="photo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Photo</label>
+              <input ngModel="{{currentSondages ? currentSondages.photo : ''}}" name="photo" type="text" id="photo" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https...">
+            </div>
+            <div>
+              <label for="idOperator2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Operateur <span class="text-red-700">*</span></label>
+              <select id="idOperator2" required type="text" ngModel="{{currentSondages ? currentSondages.idOperator : ''}}" name="idOperator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="{{go.id}}" *ngFor="let go of operator">{{go.name}}</option>
+              </select>
+            </div>
+            <div></div>
+            <button [disabled]="form1.invalid" type="submit" class="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg *ngIf="isLoading" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+              </svg>
+              Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="tache === 'ajouter-group-fees'">
+        <form #form1="ngForm" (ngSubmit)="addGroupeFees(form1)">
+          <div class="border border-green-500 p-3 rounded my-3 grid gap-6 mb-6 md:grid-cols-6">
+            <div class="col-span-5">
+              <label for="h" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Opération à effectué</label>
+              <select id="h" type="text" ngModel name="operationSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option (click)="currentGroupeFees = null" selected value="">Nouveau</option>
+                <option (click)="currentGroupeFees = ac" value="{{ac}}" *ngFor="let ac of groupeFees">Modifier {{ac.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="currentGroupeFees">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">&nbsp;</label>
+              <a (click)="deleteObjet()" class="inline-block disabled:opacity-50 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto py-1.5 px-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2 border border-orange-500 p-3 rounded my-3">
+            <div>
+              <label for="id9" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identifiant <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentGroupeFees ? currentGroupeFees.id : ''}}" name="id" type="text" id="id9" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="AbC..." required>
+            </div>
+            <div>
+              <label for="name1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nom groupe <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentGroupeFees ? currentGroupeFees.name : ''}}" name="name" type="text" id="name9" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc..." required>
+            </div>
+            <div>
+              <label for="illustration" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Illustration <span class="text-red-700">*</span></label>
+              <input id="illustration" ngModel="{{currentGroupeFees ? currentGroupeFees.illustration : ''}}" name="illustration" type="text" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https..." required>
+            </div>
+            <div>
+              <label for="idOperator" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Operateur <span class="text-red-700">*</span></label>
+              <select id="idOperator" required type="text" ngModel="{{currentGroupeFees ? currentGroupeFees.idOperator : ''}}" name="idOperator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="{{go.id}}" *ngFor="let go of operator">{{go.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="content2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contenu</label>
+              <textarea ngModel="{{currentGroupeFees ? currentGroupeFees.content : ''}}" name="content" id="content2" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https ou <div>..."></textarea>
+            </div>
+            <div></div>
+            <button [disabled]="form1.invalid" type="submit" class="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg *ngIf="isLoading" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+              </svg>
+              Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="tache === 'ajouter-operateur'">
+        <form #form1="ngForm" (ngSubmit)="addOperator(form1)">
+          <div class="border border-green-500 p-3 rounded my-3 grid gap-6 mb-6 md:grid-cols-6">
+            <div class="col-span-5">
+              <label for="i" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Opération à effectué</label>
+              <select id="i" type="text" ngModel name="operationSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option (click)="currentOperator = null" selected value="">Nouveau</option>
+                <option (click)="currentOperator = ac" value="{{ac}}" *ngFor="let ac of operator">Modifier {{ac.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="currentOperator">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">&nbsp;</label>
+              <a (click)="deleteObjet()" class="inline-block disabled:opacity-50 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto py-1.5 px-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2 border border-orange-500 p-3 rounded my-3">
+            <div>
+              <label for="id2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identifiant <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentOperator ? currentOperator.id : ''}}" name="id" type="text" id="id2" class="uppercase bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="MTNCM ou ORANGECM ou..." required>
+            </div>
+            <div>
+              <label for="name2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nom operateur <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentOperator ? currentOperator.name : ''}}" name="name" type="text" id="name2" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="MTN Cameroun ou Orange Cameroun ou..." required>
+            </div>
+            <div>
+              <label for="logo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Lien vers logo operateur <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentOperator ? currentOperator.logo : ''}}" name="logo" type="text" id="logo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://xxx" required>
+            </div>
+            <div>
+              <label for="4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Rendre public ? <span class="text-red-700">*</span></label>
+              <select id="4" required type="number" ngModel="{{currentOperator ? currentOperator.status : ''}}" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="1">Oui</option>
+                <option value="0">Non</option>
+              </select>
+            </div>
+            <div>
+              <label for="3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Groupe operateur <span class="text-red-700">*</span></label>
+              <select id="3" required type="number" ngModel="{{currentOperator ? currentOperator.idGroupeOperator : ''}}" name="groupOperator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="{{go.id}}" *ngFor="let go of groupeOperator">{{go.name}}</option>
+              </select>
+            </div>
+            <div></div>
+            <button [disabled]="form1.invalid" type="submit" class="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg *ngIf="isLoading" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+              </svg>
+              Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="tache === 'ajouter-groupe-operateur'">
+        <form #form1="ngForm" (ngSubmit)="addGroupeOperator(form1)">
+          <div class="border border-green-500 p-3 rounded my-3 grid gap-6 mb-6 md:grid-cols-6">
+            <div class="col-span-5">
+              <label for="j" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Opération à effectué</label>
+              <select id="j" type="text" ngModel name="operationSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option (click)="currentGroupeOperator = null" selected value="">Nouveau</option>
+                <option (click)="currentGroupeOperator = ac" value="{{ac}}" *ngFor="let ac of groupeOperator">Modifier {{ac.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="currentGroupeOperator">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">&nbsp;</label>
+              <a (click)="deleteObjet()" class="inline-block disabled:opacity-50 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto py-1.5 px-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2 border border-orange-500 p-3 rounded my-3">
+            <div>
+              <label for="id1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identifiant <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentGroupeOperator ? currentGroupeOperator.id : ''}}" name="id" type="text" id="id1" class="uppercase bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="MTN ou ORANGE ou..." required>
+            </div>
+            <div>
+              <label for="name1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nom groupe <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentGroupeOperator ? currentGroupeOperator.name : ''}}" name="name" type="text" id="name1" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Mtn ou Orange ou..." required>
+            </div>
+            <button [disabled]="form1.invalid" type="submit" class="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg *ngIf="isLoading" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+              </svg>
+              Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="tache === 'ajouter-pays'">
+        <form #form1="ngForm" (ngSubmit)="addCountry(form1)">
+          <div class="border border-green-500 p-3 rounded my-3 grid gap-6 mb-6 md:grid-cols-6">
+            <div class="col-span-5">
+              <label for="k" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Opération à effectué</label>
+              <select id="k" type="text" ngModel name="operationSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option (click)="currentpays = null" selected value="">Nouveau</option>
+                <option (click)="currentpays = ac" value="{{ac}}" *ngFor="let ac of pays">Modifier {{ac.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="currentpays">
+              <label for="operationSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">&nbsp;</label>
+              <a (click)="deleteObjet()" class="inline-block disabled:opacity-50 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto py-1.5 px-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2 border border-orange-500 p-3 rounded my-3">
+            <div>
+              <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identifiant <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentpays ? currentpays.id : ''}}" name="id" type="text" id="id" class="uppercase bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="CM ou CI ou..." required>
+            </div>
+            <div>
+              <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nom pays <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentpays ? currentpays.name : ''}}" name="name" type="text" id="name" class="capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cameroun ou Côte d'ivoire ou..." required>
+            </div>
+            <div>
+              <label for="code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Code identifiant internationnal <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentpays ? currentpays.code : ''}}" name="code" type="number" id="code" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="237 ou 229 ou..." required>
+            </div>
+            <div>
+              <label for="flag" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Lien vers logo pays <span class="text-red-700">*</span></label>
+              <input ngModel="{{currentpays ? currentpays.flag : ''}}" name="flag" type="text" id="flag" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://xxx" required>
+            </div>
+            <div>
+              <label for="isCountryApp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Est un pays de l'application générale ? <span class="text-red-700">*</span></label>
+              <select id="isCountryApp" required type="number" ngModel="{{currentpays ? currentpays.isCountryApp : ''}}" name="isCountryApp" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Sélectionné reponse</option>
+                <option value="1">Oui</option>
+                <option value="0">Non</option>
+              </select>
+            </div>
+            <div></div>
+            <button [disabled]="form1.invalid" type="submit" class="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg *ngIf="isLoading" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+              </svg>
+              Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="md:w-1/3">
+      <div class="w-full border border-yellow-400 p-3 rounded">
+        <h2 class="text-base font-normal text-black capitalize dark:text-white">Photo library</h2>
+        <div class="mb-2"> <span class="font-light text-sm">Add a photo and get the link to use it in the fields</span>
+          <form [formGroup]="uploadForm">
+            <div *ngIf="!imgFile" class="my-3 relative h-56 rounded-lg border-dashed border-2 border-gray-200 bg-white flex justify-center items-center hover:cursor-pointer">
+              <div class="absolute">
+                <div class="flex flex-col items-center ">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span class="block text-gray-400 font-light">Drag your photos here</span> <span class="block text-gray-400 font-normal">or</span> <button type="button" class="focus:outline-none text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-semibold rounded-lg text-base px-3 py-2 m-2 dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:focus:ring-indigo-800">Add photos</button> </div>
+              </div> <input type="file" formControlName="file" (change)="onImageChange($event)" accept="image/*" class="h-full w-full opacity-0" name="file">
+            </div>
+            <div class="py-3">
+              <img *ngIf="imgFile" class="w-full h-full overflow-hidden object-cover" src="{{imgFile}}" alt="" />
+            </div>
+            <div class="flex justify-between items-center text-gray-400 font-light"> <span>Accepted file type:.png, .jpg, .gif</span> <span class="flex items-center ">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg></span> </div>
+          </form>
+        </div>
+        <div *ngIf="imgFile" class="space-x-2">
+          <button *ngIf="!lienGenerer" (click)="uploadImage()" type="button" class="focus:outline-none text-white bg-blue-900 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-light rounded-lg text-base px-3 py-2 mt-2 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+            <svg *ngIf="isLoadingUploadImage" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+              <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+            </svg>
+            Send image
+          </button>
+          <button (click)="imgFile = null; lienGenerer = ''" type="button" class="focus:outline-none text-white bg-red-900 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-light rounded-lg text-base px-3 py-2 mt-2 dark:bg-blue-500 dark:hover:bg-red-600 dark:focus:ring-blue-800">Effacer</button>
+          <button *ngIf="lienGenerer" (click)="copieClipboard(lienGenerer)" type="button" class="focus:outline-none text-white bg-blue-900 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-light rounded-lg text-base px-3 py-2 mt-2 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+            <svg *ngIf="isLoadingUploadImage" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+              <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+            </svg>
+            Copier lien
+          </button>
+        </div>
+        <div class="my-2" *ngIf="listOldLink">
+          <div class="mb-6" *ngIf="lienGenerer">
+            <label for="adresseLink" class="block my-2 text-sm font-medium text-gray-900 dark:text-gray-300">Generate link :</label>
+            <textarea [value]="lienGenerer" id="adresseLink" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Link https"></textarea>
+          </div>
+          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="py-3 px-6">
+                Index
+                <a (click)="cleanOldLink()" class="cursor-pointer ml-2 font-medium text-red-600 dark:text-blue-500 hover:underline">Clean</a>
+              </th>
+              <th scope="col" class="py-3 px-6">
+                Action
+              </th>
+              <th scope="col" class="py-3 px-6">
+                Apercu
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700" *ngFor="let link of listOldLink.split(';').reverse(); let i = index">
+                <th scope="row" id="recap" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white" *ngIf="i != 0">
+                  {{i}}
+                </th>
+                <td class="py-4 px-6" *ngIf="i != 0">
+                  <a (click)="copieClipboard('recap')" class="cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline">Copier</a>
+                </td>
+                <td class="py-4 px-6" *ngIf="i != 0">
+                  <img class="w-10 h-10 rounded" src="{{link}}" alt="image description">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</ion-content>

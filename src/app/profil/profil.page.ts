@@ -51,8 +51,19 @@ export class ProfilPage implements OnInit {
     );
   }
 
+  shared() {
+    navigator.share({
+      title: 'MoMo Experience',
+      text: '',
+      url: window.location.hostname
+    });
+  }
+
+  findUs() {
+    alert('Zen africa, Cameroon - Douala');
+  }
+
   async confirmDeconnexion() {
-    let txt1; let txt2; let txt3;
 
     const alert = await this.alertController.create({
       header: 'Disconnection',

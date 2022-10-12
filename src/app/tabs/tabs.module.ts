@@ -6,15 +6,16 @@ import { FormsModule } from '@angular/forms';
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
-import {BouttonTchatComponent} from "../shared/boutton-tchat/boutton-tchat.component";
 
 @NgModule({
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    TabsPageRoutingModule
-  ],
-    declarations: [TabsPage, BouttonTchatComponent]
+    imports: [
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        TabsPageRoutingModule
+    ],
+    exports: [
+    ],
+    declarations: [TabsPage]
 })
 export class TabsPageModule {}

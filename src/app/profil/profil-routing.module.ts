@@ -9,8 +9,12 @@ const routes: Routes = [
     component: ProfilPage
   },
   {
-    path: 'preferred-partners',
-    loadChildren: () => import('./preferred-partners/preferred-partners.module').then( m => m.PreferredPartnersPageModule)
+    path: 'update-profil',
+    loadChildren: () => import('./update-profil/update-profil.module').then( m => m.UpdateProfilPageModule)
+  },
+  {
+    path: 'select-language',
+    loadChildren: () => import('./select-language/select-language.module').then( m => m.SelectLanguagePageModule)
   }
 ];
 

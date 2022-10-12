@@ -1,5 +1,9 @@
 <section>
-  <label class="pb-3 block text-sm font-medium text-gray-900 dark:text-gray-400">Select the point near you</label>
+  <div class="py-3">
+    <p class="px-2 text-sm font-bold tracking-tight text-blue-900 uppercase">
+      Select the point near you
+    </p>
+  </div>
 
   <google-map #myGoogleMap height="430px" width="100%" [zoom]="zoom" [center]="center" [options]="options"
               (mapClick)="eventHandler($event,'mapClick')" (mapDblclick)="eventHandler($event,'mapDblclick')"

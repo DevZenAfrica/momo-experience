@@ -1,9 +1,11 @@
-<div class="px-3 pb-1 pt-2">
-  <p class="text-xl font-bold">Do more witch MoMo</p>
+<div class="pt-3">
+  <p class="px-5 text-sm font-bold tracking-tight text-blue-900 uppercase">
+    MOMO NEWS AND PROMOTIONS
+  </p>
 </div>
 
-<ion-slides  class="ion-padding-vertical" pager="false" [options]="slideOptsNews">
+<ion-slides class="my-2" pager="false" [options]="slideOptsNews">
   <ion-slide *ngFor="let news of allNews; let i = index">
-    <app-miniature-news [idNews]="news" [data]="news"></app-miniature-news>
+    <app-miniature-article skin="card-b" [data]="news"></app-miniature-article>
   </ion-slide>
 </ion-slides>

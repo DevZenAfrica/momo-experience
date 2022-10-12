@@ -7,13 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { ProfilPageRoutingModule } from './profil-routing.module';
 
 import { ProfilPage } from './profil.page';
+import {TabsPageModule} from '../tabs/tabs.module';
+import {HomePageModule} from '../home/home.module';
+import {ShopPageModule} from '../shop/shop.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProfilPageRoutingModule
+    ProfilPageRoutingModule,
+    TabsPageModule,
+    HomePageModule,
+    ShopPageModule
   ],
   declarations: [ProfilPage]
 })

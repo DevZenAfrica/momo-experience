@@ -1,13 +1,13 @@
-<a class="flex items-center space-x-3 p-2" *ngIf="data" href="preview-partner/{{data.id}}">
+<a class="flex items-center space-x-3 p-2" *ngIf="data && skin === 'item'" href="preview-partner/{{data.id}}">
   <div class="flex-shrink-0">
-    <img class="w-8 h-8 rounded-full" [src]="data.logo ? data.logo : ''" alt="Logo">
+    <img class="w-8 h-8 rounded-lg" [src]="data.logo ? data.logo : ''" alt="Logo">
   </div>
   <div class="flex-1 min-w-0">
-    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+    <p class="text-sm font-bold text-gray-900 truncate dark:text-white">
       {{data.name}}
     </p>
     <p class="text-sm text-gray-500 truncate dark:text-gray-400 truncate">
-      {{data.description}}
+      {{data.subtitle}}
     </p>
   </div>
   <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
@@ -21,3 +21,26 @@
     </ng-container>
   </div>
 </a>
+
+<a href="preview-partner/{{data.id}}" *ngIf="skin === 'circle' && data" class="text-center uppercase elt-circle">
+  <div class="rounded-full bg-white items-center text-center inline-block align-middle">
+    <img [src]="data.logo ? data.logo : ''" class="w-7 h-7 inline m-1">
+  </div>
+  <span class="text-xs font-light text-gray-700 mt-1 block" *ngIf="data.name.split(' ').length === 1">{{ data.name }}</span>
+  <div class="text-xs font-light text-gray-700 mt-1 block" *ngIf="data.name.split(' ').length > 1">{{data.name.split(' ')[0]}} <br> <ng-container *ngFor="let tx of data.name.split(' '); let i = index"><span *ngIf="i > 0">{{tx}} </span></ng-container></div>
+</a>
+
+<a *ngIf="data && skin === 'card'" href="preview-partner/{{data.id}}" class="relative items-start h-32 flex w-52 rounded-lg shadow-md bg-cover bg-center" >
+  <div class="absolute h-full w-full bg-cover bg-center rounded-lg" style="backgroundImage: url({{data.cover}})"></div>
+  <div class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-t from-gray-600 rounded-lg"></div>
+  <div class="p-2 text-left" style="z-index: 1">
+    <a [routerLink]="'../../preview-partner/' + data.id">
+      <div class="flex items-center space-x-4">
+        <div class="flex-shrink-0 rounded-full bg-white p-1.5">
+          <img class="w-6 h-6 logo rounded-full" src="{{data.logo ? data.logo : ''}}" alt="logo">
+        </div>
+      </div>
+    </a>
+  </div>
+</a>
+

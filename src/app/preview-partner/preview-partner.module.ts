@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { PreviewPartnerPageRoutingModule } from './preview-partner-routing.module';
 
 import { PreviewPartnerPage } from './preview-partner.page';
+import {HomePageModule} from "../home/home.module";
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        PreviewPartnerPageRoutingModule
+        PreviewPartnerPageRoutingModule,
+        HomePageModule
     ],
     exports: [],
     declarations: [PreviewPartnerPage]

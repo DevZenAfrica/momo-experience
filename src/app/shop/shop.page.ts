@@ -18,6 +18,8 @@ export class ShopPage implements OnInit {
   categorieSelect = '';
   categoriesShop = ['Food', 'Station', 'Divers', 'Education'];
 
+  menuSelect = 1;
+
   constructor() { }
 
   ngOnInit() {

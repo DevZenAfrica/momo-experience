@@ -14,6 +14,8 @@ export class MiniaturePartnerComponent implements OnInit {
 
   @Input() idPartner: string;
   @Input() data: Partner = null;
+  @Input() skin = 'item';
+
   currentUser: User;
 
   constructor(private partnerService: PartnerService, private authService: AuthentificationService, private userService: UserService) { }

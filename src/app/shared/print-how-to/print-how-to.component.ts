@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {HowTo} from '../../models/howTo';
-import {HowToService} from '../../services/how-to.service';
+import {Article} from "../../models/article";
+import {ArticleService} from "../../services/article.service";
 
 @Component({
   selector: 'app-print-how-to',
@@ -12,8 +12,8 @@ export class PrintHowToComponent implements OnInit {
   slideOpts = {
     initialSlide: 0,
     speed: 800 ,
-    slidesPerView: 1.1,
-    spaceBetween: 10,
+    slidesPerView: 1.24,
+    spaceBetween: 3,
     slidesOffsetBefore:10,
     slidesOffsetAfter:10,
     coverflowEffect: {
@@ -25,15 +25,15 @@ export class PrintHowToComponent implements OnInit {
     },
     pager: true,
     scrollbar: true,
-    autoplay:true
+    //autoplay:true
   };
 
-  allHowTo: HowTo[] = [];
+  allHowTo: Article[] = [];
 
-  constructor(private howToService: HowToService) { }
+  constructor(private articleService: ArticleService) { }
 
   ngOnInit() {
-    this.howToService.getHowTo().then(
+    this.articleService.getArticles('how-to').then(
       (data) => {
         this.allHowTo = data;
       }

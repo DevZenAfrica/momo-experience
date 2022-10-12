@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Faq} from '../../models/faq';
+import {FaqService} from "../../services/faq.service";
+import {Faq} from "../../models/faq";
 
 @Component({
   selector: 'app-miniature-faq',
@@ -8,15 +9,27 @@ import {Faq} from '../../models/faq';
 })
 export class MiniatureFaqComponent implements OnInit {
 
-  @Input() data;
+	@Input() idFaq: string;
+  @Input() data: Faq;
 
-  faq: Faq;
-  isToggle;
-
-  constructor() { }
+  constructor(private faqService: FaqService) { }
 
   ngOnInit() {
-    this.faq = this.data as Faq;
+    if(!this.data && this.idFaq) {
+      this.faqService.getFaqWitchId(this.idFaq).then(
+        (donnee) => {
+          this.data = donnee;
+        }
+      );
+    }
+  }
+
+  getValueTraduct(texte: string) {
+    let result; let result2;
+    //const result1 = texte.split((this.translate.currentLang ? this.translate.currentLang : 'en') + '>');
+    //if(result1.length > 1) { result2 = result1[1].split('</'); }
+    //if(result1.length > 1 && result2.length > 0) { result = result2[0]; }
+    return result ? result : texte;
   }
 
 }

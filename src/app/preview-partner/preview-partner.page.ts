@@ -22,6 +22,8 @@ export class PreviewPartnerPage implements OnInit {
   montane = 0;
   currentCasher: Cashier;
 
+  menuSelect = 1;
+
   constructor(private partnerService: PartnerService, private activatedRoute: ActivatedRoute, public cashierService: CashierService, private authService: AuthentificationService, private userService: UserService) { }
 
   ngOnInit() {
@@ -33,6 +35,7 @@ export class PreviewPartnerPage implements OnInit {
 
     this.cashierService.getCashierWitchIdPartner(this.activatedRoute.snapshot.paramMap.get('id')).then(
       (data) => {
+        if(data.length === 0) { this.menuSelect = 2; }
         this.cashers = data;
       }
     );

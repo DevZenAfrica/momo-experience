@@ -1,5 +1,7 @@
 <section>
-  <label class="block text-sm font-medium text-gray-900 dark:text-gray-400">Choose country recept</label>
+  <div class="pt-2 px-3 text-sm font-bold tracking-tight text-blue-900 uppercase">
+    Choose country recept
+  </div>
   <div class="grid grid-cols-7 ion-padding-vertical">
     <div class="col-span-6">
       <ion-slides pager="false" [options]="slideOptsGroup">
@@ -20,12 +22,16 @@
 </section>
 
 <div class="mb-3" *ngIf="countryReceptSelect && remittances.length === 0">
-  <label class="block mb-3 text-sm font-medium text-gray-900 dark:text-gray-400">No information at this time</label>
+  <div class="pt-2 px-3 text-sm font-bold tracking-tight text-blue-900 uppercase">
+    No information at this time
+  </div>
 </div>
 
 <section *ngIf="remittances.length > 0">
   <div>
-    <label class="block mb-3 text-sm font-medium text-gray-900 dark:text-gray-400">Remittance partners</label>
+    <div class="pt-2 pb-3 px-3 text-sm font-bold tracking-tight text-blue-900 uppercase">
+      Remittance partners
+    </div>
   </div>
 
   <app-miniature-group-partner [idGroupPartner]="igp.idGroupPartner" *ngFor="let igp of remittances"></app-miniature-group-partner>

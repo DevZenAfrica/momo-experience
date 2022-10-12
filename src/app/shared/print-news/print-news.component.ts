@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {NewsService} from "../../services/news.service";
-import {News} from "../../models/news";
+import {Article} from "../../models/article";
+import {ArticleService} from "../../services/article.service";
 
 @Component({
   selector: 'app-print-news',
@@ -12,8 +12,8 @@ export class PrintNewsComponent implements OnInit {
   slideOptsNews = {
     initialSlide: 0,
     speed: 800 ,
-    slidesPerView: 1.1,
-    spaceBetween: 10,
+    slidesPerView: 1.24,
+    spaceBetween: 3,
     slidesOffsetBefore:10,
     slidesOffsetAfter:10,
     coverflowEffect: {
@@ -28,12 +28,12 @@ export class PrintNewsComponent implements OnInit {
     autoplay:true
   };
 
-  allNews: News[] = [];
+  allNews: Article[] = [];
 
-  constructor(private newsService: NewsService) { }
+  constructor(private articleService: ArticleService) { }
 
   ngOnInit() {
-    this.newsService.getNews().then(
+    this.articleService.getArticles('news').then(
       (data) => {
         this.allNews = data;
       }
